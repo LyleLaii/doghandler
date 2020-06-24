@@ -1,0 +1,24 @@
+runmode: debug
+global:
+    interval: 10
+    maxcount: 3
+    receiver: default
+services:
+    - name: test
+      serviceid: 10001
+      description: "This is a test"
+      interval: 5
+      maxcount: 2
+      receiver: default
+    - name: test2
+      interval: 2
+      serviceid: 10002
+      receiver: test
+receivers:
+    - name: default
+      webhook_config:
+        - url: http://192.168.1.221:9999/json
+    - name: test
+      webhook_config:
+        - url: http://192.168.1.221:9999/json/test
+        - url: http://192.168.1.221:9999/json
