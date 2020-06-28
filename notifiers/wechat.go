@@ -1,7 +1,8 @@
-package notify
+package notifiers
 
 import (
 	"bytes"
+	"doghandler/modules"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -14,12 +15,12 @@ type Wechat struct {
 }
 
 // SendMessage send alert message
-func (w Wechat) SendMessage(name string, description string) (err error) {
+func (w Wechat) SendMessage(d *modules.Dog) (err error) {
 	client := &http.Client{}
 
 	data := make(map[string]interface{})
-	data["servicename"] = name
-	data["description"] = description
+	data["servicename"] = d.Name
+	data["description"] = d.Description
 	data["message"] = "service long time did not receive watchdog message"
 	jsonData, _ := json.Marshal(data)
 

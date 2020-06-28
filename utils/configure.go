@@ -39,10 +39,6 @@ func (c *Config) initConfig() error {
 	if err := viper.ReadInConfig(); err != nil { // viper解析配置文件
 		return err
 	}
-	// a := viper.AllSettings()
-	// for key := range a {
-	// 	fmt.Println(key, a[key])
-	// }
 
 	return nil
 }

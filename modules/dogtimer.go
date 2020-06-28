@@ -1,7 +1,6 @@
-package pkg
+package modules
 
 import (
-	"doghandler/notify"
 	"doghandler/utils"
 	"fmt"
 	"sync"
@@ -10,6 +9,11 @@ import (
 
 // Dogs dog map
 var Dogs = make(map[string]*Dog)
+
+// Notifier Notifier interface
+type Notifier interface {
+	SendMessage(*Dog) error
+}
 
 // Dog Watchdog config
 type Dog struct {
@@ -21,15 +25,9 @@ type Dog struct {
 	Counter      int
 	Lastreceived time.Time
 	Timer        *time.Timer
-	Notifiers    []notify.Notifier
+	Notifiers    []Notifier
 	mu           sync.Mutex
 }
-
-// ServiceInfo service infomation
-// type ServiceInfo struct {
-// 	name        string
-// 	description string
-// }
 
 // TouchDog refresh dog info
 func (d *Dog) TouchDog() {
@@ -66,38 +64,8 @@ func (d *Dog) CheckDog() {
 func (d *Dog) Alert() {
 	utils.LogInfo("DogTimer", fmt.Sprintf("service %s maximum number of not received, send alert", d.ServiceID))
 	for _, n := range d.Notifiers {
-		n.SendMessage(d.Name, d.Description)
+		n.SendMessage(d)
 	}
 	d.Counter = 0
 	d.refreshtimer()
-}
-
-// InitDogs initiate Dogs slices
-func InitDogs(global notify.GlobalConf, services []notify.ServiceConf, receiversmap map[string]interface{}) {
-	for _, s := range services {
-		interval := global.Interval
-		maxcount := global.Maxcount
-		receiver := global.Receiver
-		if s.Interval != 0 {
-			interval = s.Interval
-		}
-		if s.Maxcount != 0 {
-			maxcount = s.Maxcount
-		}
-		if s.Receiver != "" {
-			receiver = s.Receiver
-		}
-
-		Dogs[s.ServiceID] = &Dog{
-			Name:         s.Name,
-			Description:  s.Description,
-			ServiceID:    s.ServiceID,
-			Interval:     interval,
-			Maxcount:     maxcount,
-			Notifiers:    receiversmap[receiver].([]notify.Notifier),
-			Counter:      0,
-			Lastreceived: time.Time{},
-			Timer:        nil,
-		}
-	}
 }

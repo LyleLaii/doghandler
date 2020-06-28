@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"doghandler/pkg"
+	"doghandler/modules"
 	"fmt"
 	"net/http"
 
@@ -11,7 +11,7 @@ import (
 // ReceiverAlert deal with watchdog message
 func ReceiverAlert(c *gin.Context) {
 	serviceid := c.Param("serviceid")
-	if dog, ok := pkg.Dogs[serviceid]; ok {
+	if dog, ok := modules.Dogs[serviceid]; ok {
 		dog.TouchDog()
 		c.JSON(http.StatusOK, gin.H{
 			"code":    200,
