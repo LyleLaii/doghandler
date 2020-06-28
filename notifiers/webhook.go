@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 // Webhook send alert by webhook
@@ -22,6 +23,7 @@ func (w Webhook) SendMessage(d *modules.Dog) (err error) {
 	data["servicename"] = d.Name
 	data["description"] = d.Description
 	data["status"] = "Firing"
+	data["time"] = time.Now()
 	data["lastreceiverd"] = d.Lastreceived
 	data["message"] = fmt.Sprintf("service %s:%s long time did not receive watchdog message,last received time: %v", d.ServiceID, d.Name, d.Lastreceived.Format("2006-01-02 15:04:05"))
 	jsonData, _ := json.Marshal(data)
