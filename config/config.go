@@ -32,7 +32,7 @@ type ServiceConf struct {
 type ReceiverConf struct {
 	Name           string              `mapstructure:"name"`
 	WebhookConfigs []notifiers.Webhook `mapstructure:"webhook_config,omitempty"`
-	WechatConfigs  []notifiers.Wechat  `mapstructure:"wechat_config,omitempty"`
+	// WechatConfigs  []notifiers.Wechat  `mapstructure:"wechat_config,omitempty"`
 }
 
 // InitDogs initiate Dogs slices
@@ -75,9 +75,9 @@ func transReceiver(rcs []ReceiverConf) map[string]interface{} {
 		for _, n := range rc.WebhookConfigs {
 			r = append(r, n)
 		}
-		for _, n := range rc.WechatConfigs {
-			r = append(r, n)
-		}
+		// for _, n := range rc.WechatConfigs {
+		// 	r = append(r, n)
+		// }
 		receivermap[rc.Name] = r
 	}
 	return receivermap
