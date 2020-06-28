@@ -64,7 +64,7 @@ func (d *Dog) CheckDog() {
 func (d *Dog) Alert() {
 	utils.LogInfo("DogTimer", fmt.Sprintf("service %s maximum number of not received, send alert", d.ServiceID))
 	for _, n := range d.Notifiers {
-		n.SendMessage(d)
+		go n.SendMessage(d)
 	}
 	d.Counter = 0
 	d.refreshtimer()
