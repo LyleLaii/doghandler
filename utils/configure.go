@@ -1,9 +1,6 @@
 package utils
 
 import (
-	"fmt"
-
-	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
 
@@ -23,7 +20,7 @@ func InitConfig(cfg string) error {
 	}
 
 	// 监控配置文件变化并热加载程序
-	c.watchConfig()
+	// c.watchConfig()
 	return nil
 }
 
@@ -44,9 +41,9 @@ func (c *Config) initConfig() error {
 }
 
 // 监控配置文件变化并热加载程序
-func (c *Config) watchConfig() {
-	viper.WatchConfig()
-	viper.OnConfigChange(func(e fsnotify.Event) {
-		fmt.Printf("Config file changed: %s", e.Name)
-	})
-}
+// func (c *Config) watchConfig() {
+// 	viper.WatchConfig()
+// 	viper.OnConfigChange(func(e fsnotify.Event) {
+// 		fmt.Printf("Config file changed: %s", e.Name)
+// 	})
+// }
