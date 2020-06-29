@@ -40,7 +40,7 @@ func (w Webhook) SendMessage(d *modules.Dog) (err error) {
 		bodyContent, _ := ioutil.ReadAll(resp.Body)
 		utils.LogWarn("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d , resdata: %s", d.ServiceID, d.Name, w.URL, resp.StatusCode, string(bodyContent)))
 	} else {
-		utils.LogInfo("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d , data: %s", d.ServiceID, d.Name, w.URL, resp.StatusCode))
+		utils.LogInfo("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d", d.ServiceID, d.Name, w.URL, resp.StatusCode))
 	}
 	return
 }
