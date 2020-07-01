@@ -5,7 +5,6 @@ import (
 	"doghandler/notifiers"
 	"doghandler/pkg/logger"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/spf13/viper"
@@ -88,11 +87,11 @@ func readConfig() (GlobalConf, []ServiceConf, map[string]interface{}) {
 	var services []ServiceConf
 	var receivers []ReceiverConf
 	if err := viper.UnmarshalKey("global", &global); err != nil {
-		logger.LogError("DogTimer", fmt.Sprintf("Error reading config file, %s", err))
+		logger.LogPanic("DogTimer", fmt.Sprintf("Error reading config file, %s", err))
 	}
 
 	if err := viper.UnmarshalKey("services", &services); err != nil {
-		logger.LogError("DogTimer", fmt.Sprintf("Error reading config file, %s", err))
+		logger.LogPanic("DogTimer", fmt.Sprintf("Error reading config file, %s", err))
 	}
 
 	temp := make(map[string]bool)
@@ -101,13 +100,12 @@ func readConfig() (GlobalConf, []ServiceConf, map[string]interface{}) {
 		if !temp[t] {
 			temp[t] = true
 		} else {
-			logger.LogError("DogTimer", fmt.Sprintf("Find duplicate serviceid %s", t))
-			os.Exit(1)
+			logger.LogPanic("DogTimer", fmt.Sprintf("Find duplicate serviceid %s", t))
 		}
 	}
 
 	if err := viper.UnmarshalKey("receivers", &receivers); err != nil {
-		logger.LogError("DogTimer", fmt.Sprintf("Error reading config file, %s", err))
+		logger.LogPanic("DogTimer", fmt.Sprintf("Error reading config file, %s", err))
 	}
 
 	temp = make(map[string]bool)
@@ -116,8 +114,7 @@ func readConfig() (GlobalConf, []ServiceConf, map[string]interface{}) {
 		if !temp[t] {
 			temp[t] = true
 		} else {
-			logger.LogError("DogTimer", fmt.Sprintf("Find duplicate receiver name %s", t))
-			os.Exit(1)
+			logger.LogPanic("DogTimer", fmt.Sprintf("Find duplicate receiver name %s", t))
 		}
 	}
 
