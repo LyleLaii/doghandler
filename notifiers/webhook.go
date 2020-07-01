@@ -3,7 +3,7 @@ package notifiers
 import (
 	"bytes"
 	"doghandler/modules"
-	"doghandler/utils"
+	"doghandler/pkg/logger"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -31,16 +31,16 @@ func (w Webhook) SendMessage(d *modules.Dog) (err error) {
 	requestPost, err := http.NewRequest("POST", w.URL, bytes.NewReader(jsonData))
 	resp, err := client.Do(requestPost)
 	if err != nil {
-		utils.LogWarn("WebHook", fmt.Sprintf("server %s:%s post to %s error: %s!", d.ServiceID, d.Name, w.URL, err.Error()))
+		logger.LogWarn("WebHook", fmt.Sprintf("server %s:%s post to %s error: %s!", d.ServiceID, d.Name, w.URL, err.Error()))
 
 		return
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		bodyContent, _ := ioutil.ReadAll(resp.Body)
-		utils.LogWarn("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d , resdata: %s", d.ServiceID, d.Name, w.URL, resp.StatusCode, string(bodyContent)))
+		logger.LogWarn("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d , resdata: %s", d.ServiceID, d.Name, w.URL, resp.StatusCode, string(bodyContent)))
 	} else {
-		utils.LogInfo("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d", d.ServiceID, d.Name, w.URL, resp.StatusCode))
+		logger.LogInfo("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d", d.ServiceID, d.Name, w.URL, resp.StatusCode))
 	}
 	return
 }

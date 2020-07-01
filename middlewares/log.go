@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"doghandler/utils"
+	"doghandler/pkg/logger"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -37,7 +37,7 @@ func LoggerToFile() gin.HandlerFunc {
 		clientIP := c.ClientIP()
 
 		// 日志格式
-		utils.Logger.WithFields(logrus.Fields{
+		logger.Logger.WithFields(logrus.Fields{
 			"status_code":  statusCode,
 			"latency_time": latencyTime,
 			"client_ip":    clientIP,

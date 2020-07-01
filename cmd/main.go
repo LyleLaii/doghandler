@@ -2,6 +2,7 @@ package main
 
 import (
 	"doghandler/config"
+	"doghandler/pkg/logger"
 	"doghandler/routers"
 	"doghandler/utils"
 	"net/http"
@@ -16,7 +17,7 @@ var (
 func main() {
 	pflag.Parse()
 	utils.InitConfig(*cfg)
-	utils.InitLogger()
+	logger.InitLogger()
 
 	config.InitDogs()
 

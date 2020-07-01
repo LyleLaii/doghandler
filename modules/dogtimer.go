@@ -1,7 +1,7 @@
 package modules
 
 import (
-	"doghandler/utils"
+	"doghandler/pkg/logger"
 	"fmt"
 	"sync"
 	"time"
@@ -36,7 +36,7 @@ func (d *Dog) TouchDog() {
 	d.Lastreceived = time.Now()
 	d.refreshtimer()
 	d.mu.Unlock()
-	utils.LogInfo("DogTimer", fmt.Sprintf("service %s last received time: %s", d.ServiceID, d.Lastreceived))
+	logger.LogInfo("DogTimer", fmt.Sprintf("service %s last received time: %s", d.ServiceID, d.Lastreceived))
 }
 
 func (d *Dog) refreshtimer() {
@@ -50,7 +50,7 @@ func (d *Dog) refreshtimer() {
 func (d *Dog) CheckDog() {
 	d.mu.Lock()
 	d.Counter = d.Counter + 1
-	utils.LogInfo("DogTimer", fmt.Sprintf("service %s did not receiver, now counter is : %v, max count is: %v", d.ServiceID, d.Counter, d.Maxcount))
+	logger.LogInfo("DogTimer", fmt.Sprintf("service %s did not receiver, now counter is : %v, max count is: %v", d.ServiceID, d.Counter, d.Maxcount))
 	if d.Counter >= d.Maxcount {
 		d.Alert()
 		d.refreshtimer()
@@ -62,7 +62,7 @@ func (d *Dog) CheckDog() {
 
 // Alert Send the message that the dog is dead
 func (d *Dog) Alert() {
-	utils.LogInfo("DogTimer", fmt.Sprintf("service %s maximum number of not received, send alert", d.ServiceID))
+	logger.LogInfo("DogTimer", fmt.Sprintf("service %s maximum number of not received, send alert", d.ServiceID))
 	for _, n := range d.Notifiers {
 		go n.SendMessage(d)
 	}
