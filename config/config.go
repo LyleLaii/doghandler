@@ -12,19 +12,19 @@ import (
 
 // GlobalConf global as default config
 type GlobalConf struct {
-	Interval int    `mapstructure:"interval"`
-	Maxcount int    `mapstructure:"maxcount"`
-	Receiver string `mapstructure:"receiver"`
+	Interval time.Duration `mapstructure:"interval"`
+	Maxcount int           `mapstructure:"maxcount"`
+	Receiver string        `mapstructure:"receiver"`
 }
 
 // ServiceConf service config
 type ServiceConf struct {
-	Name        string `mapstructure:"name"`
-	ServiceID   string `mapstructure:"serviceid"`
-	Description string `mapstructure:"description,omitempty"`
-	Interval    int    `mapstructure:"interval,omitempty"`
-	Maxcount    int    `mapstructure:"maxcount,omitempty"`
-	Receiver    string `mapstructure:"receiver,omitempty"`
+	Name        string        `mapstructure:"name"`
+	ServiceID   string        `mapstructure:"serviceid"`
+	Description string        `mapstructure:"description,omitempty"`
+	Interval    time.Duration `mapstructure:"interval,omitempty"`
+	Maxcount    int           `mapstructure:"maxcount,omitempty"`
+	Receiver    string        `mapstructure:"receiver,omitempty"`
 }
 
 // ReceiverConf receiver config
@@ -63,6 +63,7 @@ func InitDogs() {
 			Timer:        nil,
 		}
 	}
+	logger.LogDebug("test", fmt.Sprintf("%+v", modules.Dogs))
 }
 
 func transReceiver(rcs []ReceiverConf) map[string]interface{} {

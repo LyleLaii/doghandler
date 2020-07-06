@@ -2,6 +2,7 @@ package v1
 
 import (
 	"doghandler/modules"
+	"doghandler/pkg/logger"
 	"fmt"
 	"net/http"
 
@@ -18,6 +19,7 @@ func ReceiverAlert(c *gin.Context) {
 			"message": fmt.Sprintf("get service %s barking", serviceid),
 		})
 	} else {
+		logger.LogInfo("DogHandler", fmt.Sprintf("service %s did not register", serviceid))
 		c.JSON(http.StatusOK, gin.H{
 			"code":    404,
 			"message": fmt.Sprintf("service %s did not register", serviceid),

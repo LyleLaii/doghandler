@@ -11,7 +11,7 @@ services:
       maxcount: 2
       receiver: default
     - name: test2
-      interval: 2
+      interval: 2m
       serviceid: 10002
       receiver: test
 receivers:

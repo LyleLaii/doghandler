@@ -20,7 +20,7 @@ type Dog struct {
 	Name         string
 	ServiceID    string
 	Description  string
-	Interval     int
+	Interval     time.Duration
 	Maxcount     int
 	Counter      int
 	Lastreceived time.Time
@@ -43,7 +43,7 @@ func (d *Dog) refreshtimer() {
 	if d.Timer != nil {
 		d.Timer.Stop()
 	}
-	d.Timer = time.AfterFunc(time.Duration(d.Interval)*time.Second, d.CheckDog)
+	d.Timer = time.AfterFunc(d.Interval, d.CheckDog)
 }
 
 // CheckDog check dog status
