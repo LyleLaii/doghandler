@@ -28,4 +28,5 @@ COPY conf/settings.yaml /etc/settings.yaml
 
 EXPOSE 8080
 
-ENTRYPOINT [ "bin/doghandler", "-c", "/etc/settings.yaml" ]
+ENTRYPOINT [ "bin/doghandler" ]
+CMD ["-c", "/etc/settings.yaml" ]
