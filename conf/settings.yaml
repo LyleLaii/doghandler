@@ -1,17 +1,17 @@
 runmode: debug
 global:
-    interval: 10
+    interval: 10s
     maxcount: 3
     receiver: default
 services:
     - name: test
       serviceid: 10001
       description: "This is a test"
-      interval: 5
+      interval: 5s
       maxcount: 2
       receiver: default
     - name: test2
-      interval: 2m
+      interval: 1m
       serviceid: 10002
       receiver: test
 receivers:

@@ -2,6 +2,8 @@ package main
 
 import (
 	"doghandler/config"
+	"doghandler/modules"
+	"doghandler/notifiers"
 	"doghandler/pkg/logger"
 	"doghandler/routers"
 	"doghandler/utils"
@@ -19,7 +21,9 @@ func main() {
 	utils.InitConfig(*cfg)
 	logger.InitLogger()
 
-	config.InitDogs()
+	receivers := config.InitReceivers()
+	notifiers.InitNotifyIntergrationMap(receivers)
+	modules.InitDogs(config.ReadConfig())
 
 	router := routers.InitRouter()
 
