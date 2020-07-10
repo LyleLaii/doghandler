@@ -24,7 +24,7 @@ type Receiver struct {
 	// WechatConfigs  []notifiers.Wechat  `mapstructure:"wechat_config,omitempty"`
 }
 
-// WebhookConfig send alert by webhook
+// WebhookConfig webhook config simple
 type WebhookConfig struct {
 	URL string `mapstructure:"url"`
 }
