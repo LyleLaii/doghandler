@@ -22,28 +22,13 @@ func InitLogger() {
 	// 日志文件
 	fileName := path.Join(currentPath, logFilePath, logFileName)
 
-	// 写入文件
-	// src, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-	// src, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	// if err != nil {
-	// 	fmt.Println("err", err)
-	// }
-
-	// 实例化
-	// logger := logrus.New()
-
-	// 设置输出
-	// mw := io.MultiWriter(os.Stdout, src)
-	// Logger.SetOutput(mw)
-	// Logger.Out = src
-
 	// 设置日志级别
 	Logger.SetLevel(logrus.DebugLevel)
 
 	// 设置 rotatelogs
 	logWriter, _ := rotatelogs.New(
 		// 分割后的文件名称
-		fileName+".%Y%m%d.log",
+		fileName+".%Y%m%d",
 		// 生成软链，指向最新日志文件
 		rotatelogs.WithLinkName(fileName),
 		// 设置最大保存时间(7天)
