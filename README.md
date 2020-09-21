@@ -1,5 +1,7 @@
 # DogHandler
 
+***This project is in the demo phase.***
+
 监听WatchDog类告警消息，一定时间未收到消息则进行告警。
 
 
