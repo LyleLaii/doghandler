@@ -3,13 +3,11 @@ FROM golang:1.14-alpine3.12 AS builder
 WORKDIR /root/doghandler
 COPY . .
 RUN go env -w GOPROXY=https://goproxy.cn,direct
-RUN CGO_ENABLED=0 GOOS=linux go build -a -trimpath -o bin/doghandler cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -trimpath -o bin/doghandler cmd/doghandler/main.go
 
 
-ARG NPM_REGISTRY=https://registry.npm.taobao.org
-ARG GOPROXY="https://mirrors.aliyun.com/goproxy/"
-
-
+#ARG NPM_REGISTRY=https://registry.npm.taobao.org
+#ARG GOPROXY="https://mirrors.aliyun.com/goproxy/"
 
 FROM alpine:3.12
 
