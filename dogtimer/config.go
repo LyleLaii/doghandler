@@ -1,4 +1,4 @@
-package config
+package dogtimer
 
 import (
 	"doghandler/pkg/logger"

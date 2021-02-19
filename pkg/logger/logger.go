@@ -14,10 +14,10 @@ import (
 var Logger = logrus.New()
 
 // InitLogger init logger
-func InitLogger() {
+func InitLogger(serverName string) {
 	currentPath, _ := os.Getwd()
 	logFilePath := "log"
-	logFileName := "doghandler.log"
+	logFileName := serverName + ".log"
 
 	// 日志文件
 	fileName := path.Join(currentPath, logFilePath, logFileName)
@@ -54,7 +54,7 @@ func InitLogger() {
 	Logger.AddHook(lfHook)
 }
 
-// LogDebug log warn infomation
+// LogDebug log warn information
 func LogDebug(module string, data interface{}) {
 	Logger.WithFields(
 		logrus.Fields{
@@ -62,7 +62,7 @@ func LogDebug(module string, data interface{}) {
 		}).Debug(data)
 }
 
-// LogInfo log info infomation
+// LogInfo log info information
 func LogInfo(module string, data interface{}) {
 	Logger.WithFields(
 		logrus.Fields{
@@ -70,7 +70,7 @@ func LogInfo(module string, data interface{}) {
 		}).Info(data)
 }
 
-// LogWarn log warn infomation
+// LogWarn log warn information
 func LogWarn(module string, data interface{}) {
 	Logger.WithFields(
 		logrus.Fields{
@@ -78,7 +78,7 @@ func LogWarn(module string, data interface{}) {
 		}).Warn(data)
 }
 
-// LogError log error ingomation
+// LogError log error information
 func LogError(module string, data interface{}) {
 	Logger.WithFields(
 		logrus.Fields{

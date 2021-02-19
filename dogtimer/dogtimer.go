@@ -1,4 +1,4 @@
-package modules
+package dogtimer
 
 import (
 	"doghandler/config"
@@ -31,12 +31,12 @@ func (d *Dog) TouchDog() {
 	d.mu.Lock()
 	d.Counter = 0
 	d.Lastreceived = time.Now()
-	d.refreshtimer()
+	d.refreshTimer()
 	d.mu.Unlock()
 	logger.LogInfo("DogTimer", fmt.Sprintf("service %s received message, time: %s", d.ServiceID, d.Lastreceived))
 }
 
-func (d *Dog) refreshtimer() {
+func (d *Dog) refreshTimer() {
 	if d.Timer != nil {
 		d.Timer.Stop()
 	}
@@ -54,9 +54,9 @@ func (d *Dog) CheckDog() {
 		d.Maxcount))
 	if d.Counter >= d.Maxcount {
 		d.Alert()
-		d.refreshtimer()
+		d.refreshTimer()
 	} else {
-		d.refreshtimer()
+		d.refreshTimer()
 	}
 	d.mu.Unlock()
 }
@@ -73,11 +73,11 @@ func (d *Dog) Alert() {
 		})
 	}
 	d.Counter = 0
-	d.refreshtimer()
+	d.refreshTimer()
 }
 
 // InitDogs initiate Dogs slices
-func InitDogs(global config.GlobalConf, services []config.ServiceConf) {
+func InitDogs(global GlobalConf, services []ServiceConf) {
 	for _, s := range services {
 		interval := global.Interval
 		maxcount := global.Maxcount
@@ -105,4 +105,14 @@ func InitDogs(global config.GlobalConf, services []config.ServiceConf) {
 		}
 	}
 	logger.LogDebug("test", fmt.Sprintf("%+v", Dogs))
+}
+
+func ClearDogs() {
+	logger.LogInfo("dogtimer", "stop all timer to clear dogs")
+	for _, v := range Dogs {
+		if v.Timer != nil {
+			v.Timer.Stop()
+		}
+	}
+	Dogs = make(map[string]*Dog)
 }

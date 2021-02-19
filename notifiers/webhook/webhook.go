@@ -42,15 +42,15 @@ func (w Webhook) Notify(m *config.Message) {
 	requestPost, err := http.NewRequest("POST", w.config.URL, bytes.NewReader(jsonData))
 	resp, err := w.client.Do(requestPost)
 	if err != nil {
-		logger.LogWarn("WebHook", fmt.Sprintf("server %s:%s post to %s error: %s!", m.ServiceID, m.Name, w.config.URL, err.Error()))
+		logger.LogWarn("WebHook", fmt.Sprintf("service %s:%s post to %s error: %s!", m.ServiceID, m.Name, w.config.URL, err.Error()))
 		return
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		bodyContent, _ := ioutil.ReadAll(resp.Body)
-		logger.LogWarn("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d , resdata: %s", m.ServiceID, m.Name, w.config.URL, resp.StatusCode, string(bodyContent)))
+		logger.LogWarn("WebHook", fmt.Sprintf("service %s:%s post to %s status: %d , resdata: %s", m.ServiceID, m.Name, w.config.URL, resp.StatusCode, string(bodyContent)))
 	} else {
-		logger.LogInfo("WebHook", fmt.Sprintf("server %s:%s post to %s status: %d", m.ServiceID, m.Name, w.config.URL, resp.StatusCode))
+		logger.LogInfo("WebHook", fmt.Sprintf("service %s:%s post to %s status: %d", m.ServiceID, m.Name, w.config.URL, resp.StatusCode))
 	}
 	return
 }
